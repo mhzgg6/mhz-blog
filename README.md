@@ -1,0 +1,2 @@
+# mhz-blog
+my blog
