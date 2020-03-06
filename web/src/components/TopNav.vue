@@ -6,27 +6,27 @@
       <div class="contact clearfix">
         <div class="contact_email">
           <span class="contact_email_icon">
-            <img src="../assets/top/phone.png" alt="" width="100%" height="100%">
+            <img src="http://cdn.mhzgg.com/phone.png" alt="" width="100%" height="100%">
           </span>
           <span class="contact_email_text">1695934841@qq.com</span>
         </div>
 
         <div class="contact_phone">
           <span class="contact_phone_icon">
-            <img src="../assets/top/phone.png" alt="" width="100%" height="100%">
+            <img src="http://cdn.mhzgg.com/phone.png" alt="" width="100%" height="100%">
           </span>
           <span class="contact_phone_text">13648319375</span>
         </div>
 
         <div class="contact_social">
           <span>
-            <img src="../assets/top/github.png" alt="" width="100%" height="100%">
+            <img src="http://cdn.mhzgg.com/github.png" alt="" width="100%" height="100%">
           </span>
           <span>
-            <img src="../assets/top/qq.png" alt="" width="100%" height="100%">
+            <img src="http://cdn.mhzgg.com/qq.png" alt="" width="100%" height="100%">
           </span>
           <span>
-            <img src="../assets/top/wechat.png" alt="" width="100%" height="100%">
+            <img src="http://cdn.mhzgg.com/wechat.png" alt="" width="100%" height="100%">
           </span>
         </div>
       </div>
@@ -45,7 +45,7 @@
       <div class="nav_logo clearfix">
         <div class="nav_logo_img">
           <a href="/">
-            <img src="../assets/top/logo.jpg" alt="" width="100%" height="100%">
+            <img src="http://cdn.mhzgg.com/logo.jpg" alt="" width="100%" height="100%">
           </a>
         </div>
       </div>
@@ -128,7 +128,7 @@
       <!-- <h2 @click="show_moble_nav">ssssssssssssssssssssssss</h2> -->
       <div class="moble_logo">
         <a href="/">
-          <img src="https://s2.ax1x.com/2020/01/05/lDpJ9x.png" alt="">
+          <img src="http://cdn.mhzgg.com/logo.jpg" alt="">
         </a>
       </div>
 

@@ -5,7 +5,7 @@
       <div class="snow" v-for="(item, i) in arr" :key="i"></div>
       <div class="con" v-show="isShow">
         <div class="nav_logo">
-          <img src="../assets/top/logo.png" alt="">
+          <img src="http://cdn.mhzgg.com/logo.png" alt="">
         </div>
         <div class="nav_link">
           <router-link to="/blog/home">HOME</router-link>

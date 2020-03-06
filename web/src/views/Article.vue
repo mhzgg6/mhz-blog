@@ -213,6 +213,17 @@ export default{
         margin: 0 auto;
       }
     }
+    pre{
+      background: #f8f8f8;
+      font-size: .213333rem;
+      padding: 10px;
+      line-height: .4rem;
+      white-space:pre-wrap; /* css3.0 */ 
+      white-space:-moz-pre-wrap; /* Firefox */ 
+      white-space:-pre-wrap; /* Opera 4-6 */ 
+      white-space:-o-pre-wrap; /* Opera 7 */ 
+      word-wrap:break-word; /* Internet Explorer 5.5+ */ 
+    }
   } 
   @media screen and (max-width: 720px){
     .main_conten{
@@ -221,6 +232,9 @@ export default{
       }
       p{
         font-size: .36rem;
+      }
+      pre{
+        line-height: 20px;
       }
     }
   }

@@ -9,7 +9,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#iconlabel"></use> 
           </svg>
-          标签集合
+          公告
         </span>
       </div>
       <div class="lable_list">
@@ -47,7 +47,7 @@
       <div class="lable_title">
         <span>
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#iconlabel"></use> 
+            <use xlink:href="#iconyoulian"></use> 
           </svg>
           友情链接
         </span>
@@ -67,7 +67,7 @@
       <div class="lable_title">
         <span>
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#iconlabel"></use> 
+            <use xlink:href="#icontongji"></use> 
           </svg>
           站点统计
         </span>

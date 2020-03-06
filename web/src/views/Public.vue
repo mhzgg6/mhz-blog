@@ -72,7 +72,7 @@
           <div class="item">
             <button @click="login">登陆</button>
           </div>
-          <p>注册登录即表示同意<a>用户协议、隐私政策</a></p>
+          <p>注册登录即表示同意<router-link to="/privacy">用户协议、隐私政策</router-link></p>
         </div>
 
         <!-- 头像裁剪 开始-->
@@ -142,7 +142,7 @@
             <button @click="registered">注册</button>
           </div>
 
-          <p>注册登录即表示同意<a href="/privacy">用户协议、隐私政策</a></p>
+          <p>注册登录即表示同意<router-link to="/privacy">用户协议、隐私政策</router-link></p>
         </div>
 
       </div>
@@ -174,9 +174,9 @@ export default{
       timer: null,
       isGetVerification: true,               // 是否开启获取验证码事件
       pandamList: [
-        'https://s2.ax1x.com/2020/01/06/lr23sU.png',
-        'https://s2.ax1x.com/2020/01/06/lr2yee.png',
-        'https://s2.ax1x.com/2020/01/06/lr22FA.png'
+        'http://cdn.mhzgg.com/panda_lovely.png',
+        'http://cdn.mhzgg.com/panda_hug.png',
+        'http://cdn.mhzgg.com/panda_lovely.png'
       ],
       pandamIndex: 0,
       isUpload: false,            //  是否上传头像

@@ -260,10 +260,11 @@ export default {
 
         .article_left{
             width: 290px;
-            // height: 225px;
+            min-height: 220px;
             margin: 24px 30px;
             overflow: hidden;
             img{
+                height: 100%;
                 cursor: pointer;
                 &:hover{
                     opacity: 0.9;

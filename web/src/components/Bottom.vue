@@ -13,7 +13,7 @@
                 <use xlink:href="#iconQQ"></use>
               </svg>
               <div>
-                <img src="../assets/bottom/qq.jpg" alt="" width="100%" height="100%">
+                <img src="http://cdn.mhzgg.com/mhz_qq.jpg" alt="" width="100%" height="100%">
               </div>
             </div>
             <div class="item_icon_info">
@@ -21,7 +21,7 @@
                 <use xlink:href="#iconweixin"></use> 
               </svg>
               <div>
-                <img src="../assets/bottom/wx.jpg" alt="" width="100%" height="100%">
+                <img src="http://cdn.mhzgg.com/mhz_wx.jpg" alt="" width="100%" height="100%">
               </div>
             </div>
             <div class="item_icon_info">
@@ -139,7 +139,7 @@ export default {
     width: 1200px;
     height: 400px;
     margin: 0 auto;
-    background: url("../assets/bottom/bottom.png") no-repeat;
+    background: url("http://cdn.mhzgg.com/bottom.png") no-repeat;
     background-position: center 200px;
 
     .content{

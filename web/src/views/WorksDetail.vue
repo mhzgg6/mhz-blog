@@ -391,7 +391,7 @@ export default{
   }
 
   @media screen and (max-width: 720px){
-    padding: 0 20px 20px 20px;
+    padding: 20px;
     box-sizing: border-box;
 
     .detail_con{

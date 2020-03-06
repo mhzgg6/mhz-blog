@@ -36,8 +36,8 @@ Vue.use(VueAwesomeSwiper)
 Vue.use(ElementUI)
 Vue.use(VueCropper)
 Vue.use(VueLazyload,{
-  error:'/static/images/logo.png',//图片加载失败时候显示的图片
-  loading:require('../static/home/loading.gif')//图片还未加载完成时候的loading图片
+  error:'http://cdn.mhzgg.com/loading.gif',//图片加载失败时候显示的图片
+  loading:'http://cdn.mhzgg.com/loading.gif'//图片还未加载完成时候的loading图片
 })
 
 new Vue({
