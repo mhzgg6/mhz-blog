@@ -36,7 +36,8 @@
           </span>
         </div>
         <p>欢迎各位朋友来到博客!</p>
-        <p>博客使用vue+koa+mongodb搭建,部署在阿里云上面.源码存放在Github，欢迎Star</p>
+        <p>博客使用vue+koa+mongodb搭建,图片存放在七牛云，部署在阿里云上面.源码存放在<a target="_blank" href="https://github.com/mhzgg6/mhz-blog/tree/dev">Github</a>，欢迎Star。博客主要用来记录自己的学习、生活的点点滴滴，以及作品。</p>
+        <p>欢迎大家一起交流前端、谈谈人生和理想，记得留言哦。</p>
       </div>
       <!-- 个人信息 结束 -->
 
@@ -225,7 +226,7 @@ export default{
       background: #fff;
       border-radius: 5px;
       box-sizing: border-box;
-      padding-bottom: 40px;
+      padding-bottom: 20px;
       min-height: 260px;
       .lable_title{
         height: 40px;
@@ -243,6 +244,9 @@ export default{
       }
       > p{
         line-height: 30px;
+        a{
+          color: #1890ff;
+        }
       }
     }
     .toggle{
@@ -274,7 +278,7 @@ export default{
     .right{
       position: absolute;
       right: 0;
-      top: 584px;
+      top: 620px;
       width: 340px;
     }
     @media screen and (max-width: 720px){

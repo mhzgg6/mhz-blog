@@ -40,6 +40,11 @@ Vue.use(VueLazyload,{
   loading:'http://cdn.mhzgg.com/loading.gif'//图片还未加载完成时候的loading图片
 })
 
+router.beforeEach((to, from, next) => {
+  window.document.title = to.meta.title == undefined?'哈哈哈哈':to.meta.title
+  next()
+})
+
 new Vue({
   router,
   store,

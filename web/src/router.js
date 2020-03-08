@@ -15,6 +15,9 @@ export default new Router({
       path: '/',
       name: 'index',
       component: () => import('./views/Index.vue'),
+      meta: {
+        title: "欢迎来到老毛~博客"
+      }
     },
     {
       path: '/blog',
@@ -24,54 +27,84 @@ export default new Router({
         {
           path: '/blog/home',
           name: 'home',
-          component: () => import('./views/Home.vue')
+          component: () => import('./views/Home.vue'),
+          meta: {
+            title: "首页"
+          }
         },
         {
           path: '/blog/web',
           name: 'web',
-          component: () => import('./views/Web.vue')
+          component: () => import('./views/Web.vue'),
+          meta: {
+            title: "前端开发"
+          }
         },
         {
           path: '/blog/moodtown',
           name: 'moodtown',
-          component: () => import('./views/Moodtown.vue')
+          component: () => import('./views/Moodtown.vue'),
+          meta: {
+            title: "心情小镇"
+          }
         },
         {
           path: '/blog/article/detail',
           name: 'articleDetail',
-          component: () => import('./views/Article.vue')
+          component: () => import('./views/Article.vue'),
+          meta: {
+            title: "文章详情"
+          }
         },
         {
           path: '/blog/works',
           name: 'works',
-          component: () => import('./views/Works.vue')
+          component: () => import('./views/Works.vue'),
+          meta: {
+            title: "设计和绘画"
+          }
         },
         {
           path: '/blog/worksDetail/:id',
           name: 'worksDetail',
-          component: () => import('./views/WorksDetail.vue')
+          component: () => import('./views/WorksDetail.vue'),
+          meta: {
+            title: "作品详情"
+          }
         },
         {
           path: '/blog/about',
           name: 'about',
-          component: () => import('./views/AboutBlog.vue')
+          component: () => import('./views/AboutBlog.vue'),
+          meta: {
+            title: "关于博客"
+          }
         },
         {
           path: '/blog/comment/detail',
           name: 'leaveMessage',
-          component: () => import('./views/Common.vue')
+          component: () => import('./views/Common.vue'),
+          meta: {
+            title: "详情"
+          }
         },
         {
           path: '/blog/user/setting',
           name: 'personal_setting',
-          component: () => import('./views/Setting.vue')
+          component: () => import('./views/Setting.vue'),
+          meta: {
+            title: "个人设置"
+          }
         },
       ]
     },
     {
       path: '/privacy',
       name: 'privacy',
-      component: () => import('./views/Privacy.vue')
+      component: () => import('./views/Privacy.vue'),
+      meta: {
+        title: "用户协议"
+      }
     }
   ]
 })

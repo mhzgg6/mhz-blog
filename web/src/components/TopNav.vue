@@ -197,11 +197,12 @@ export default {
           audioSrc: path + 'nav_2.mp3',
           span: '前端开发',
           link: { name: 'web', query: { type: 'vue' } },
-          skillList: ['vue','html','js'],
+          skillList: ['Vue','Html+Css','JavaScript','Node'],
           skillLink: [
             { name: 'web', query: { type: 'vue' } },
             { name: 'web', query: { type: 'html' } },
-            { name: 'web', query: { type: 'js' } }
+            { name: 'web', query: { type: 'js' } },
+            { name: 'web', query: { type: 'node' } }
           ]
         },
         {

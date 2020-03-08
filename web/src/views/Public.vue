@@ -176,7 +176,7 @@ export default{
       pandamList: [
         'http://cdn.mhzgg.com/panda_lovely.png',
         'http://cdn.mhzgg.com/panda_hug.png',
-        'http://cdn.mhzgg.com/panda_lovely.png'
+        'http://cdn.mhzgg.com/panda_eyes.png'
       ],
       pandamIndex: 0,
       isUpload: false,            //  是否上传头像

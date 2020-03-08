@@ -85,7 +85,7 @@ exports.keyArticle = async ctx => {
     page --
     const data = await Article
         .find({"label":{$in:[type]}},{"content": 0})                 //  查找所有
-        .sort('created')       //  排序 以创建时间倒叙
+        .sort('-created')       //  排序 以创建时间倒叙
         .skip(size * page)      //  跳过多少条
         .limit(size)            //  需要多少条数据
         .populate({

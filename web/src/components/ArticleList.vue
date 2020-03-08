@@ -215,7 +215,7 @@ export default {
 <style lang="scss" scoped>
 .list{
     width: 840px;
-    min-height: 900px;
+    min-height: 950px;
     .list_none{
         width: 100%;
         height: 40px;
