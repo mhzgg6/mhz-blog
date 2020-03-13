@@ -1,5 +1,4 @@
 # mhz-blog
-my blog
 ### 个人博客
 
 前端： vue全家桶
@@ -12,7 +11,7 @@ my blog
 
 图片保存/静态资源： 七牛云
 
-web是博客前端代码，server是后台服务器代码，admin是博客后台管理界面代码
+web文件夹是博客前端代码，server文件夹是后台服务器代码，admin文件夹是博客后台管理界面代码
 
 后台编辑器是： mavonEditor
 
@@ -38,3 +37,12 @@ cd ./web || ./admin
 npm/cnpm i
 npm run serve
 ```
+#### 前端界面展示
+http://cdn.mhzgg.com/show_one.png
+
+http://cdn.mhzgg.com/show_two.png
+
+#### 后台管理界面展示
+http://cdn.mhzgg.com/show_three.png
+
+http://cdn.mhzgg.com/show_four.png
