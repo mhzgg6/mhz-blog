@@ -38,11 +38,20 @@ npm/cnpm i
 npm run serve
 ```
 #### 前端界面展示
-http://cdn.mhzgg.com/show_one.png
+![show_one](http://cdn.mhzgg.com/show_one.png)
 
-http://cdn.mhzgg.com/show_two.png
+![show_two](http://cdn.mhzgg.com/show_two.png)
 
 #### 后台管理界面展示
-http://cdn.mhzgg.com/show_three.png
+![show_three](http://cdn.mhzgg.com/show_three.png)
 
-http://cdn.mhzgg.com/show_four.png
+![show_four](http://cdn.mhzgg.com/show_four.png)
+
+#### ToDo
+* 优化代码，减少首屏加载时间
+* 前端尽量少使用第三方插件，尽量自己去封装组件
+* 二级评论
+* 实现搜索功能
+* 写文章实时保存
+* 完善后台功能
+
