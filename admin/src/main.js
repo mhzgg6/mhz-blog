@@ -7,7 +7,9 @@ import axios from 'axios'
 import ElementUI from './assets/element_ui/elementConfig'
 import './assets/element_ui/element-variables.scss'
 import 'element-ui/lib/theme-chalk/index.css'
-
+//  导入ant design vue
+// import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.less';
 //  导入icon.js
 import './assets/icon/iconfont'
 import request from './assets/axios/index'
@@ -22,6 +24,7 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(request)
 Vue.use(ElementUI)
+// Vue.use(Antd)
 
 new Vue({
   router,

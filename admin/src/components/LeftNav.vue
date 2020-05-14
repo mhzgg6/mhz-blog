@@ -5,67 +5,49 @@
       logo
     </div>
     <!-- 结束 logo -->
-    <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-      
-      <el-menu-item index="1">
-        <i class="el-icon-menu"></i>
-        <span slot="title">
-          <router-link to="/admin/index">主页</router-link>
-        </span>
-      </el-menu-item>
-      
-      <el-submenu index="2">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span slot="title">文章</span>
-        </template>
-        <el-menu-item index="2-1">
+    <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
+      <a-menu-item key="1">
+        <a-icon type="user" />
+        <router-link to="/admin">首页</router-link>
+      </a-menu-item>
+      <a-menu-item key="2">
+        <a-icon type="video-camera" />
+        <span>nav 2</span>
+      </a-menu-item>
+      <a-sub-menu key="sub1">
+        <span slot="title"><a-icon type="mail" /><span>文章</span></span>
+        <a-menu-item key="5">
           <router-link to="/admin/articlList">文章列表</router-link>
-        </el-menu-item>
-        <el-menu-item index="2-2">
+        </a-menu-item>
+        <a-menu-item key="6">
           <router-link to="/admin/editArticle">添加文章</router-link>
-        </el-menu-item>
-      </el-submenu>
-
-      <el-menu-item index="3">
-        <i class="el-icon-menu"></i>
-        <span slot="title">用户列表</span>
-      </el-menu-item>
-<!-- 
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
-
-      <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航四</span>
-      </el-menu-item> -->
-
-    </el-menu>
+        </a-menu-item>
+      </a-sub-menu>
+    </a-menu>
   </div>
 </template>
 
 <script>
+import { Menu, Icon, SubMenu } from 'ant-design-vue';
 export default {
   name: 'left_nav',
+  components: {
+    AMenu: Menu,
+    AMenuItem: Menu.Item,
+    AIcon: Icon,
+    ASubMenu: Menu.SubMenu
+  },
   data() {
     return{
 
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="less" scoped>
 .left_nav{
   width: 100%;
   height: 100%;
@@ -74,6 +56,13 @@ export default {
     height: 60px;
     background: greenyellow;
   }
-
+  /deep/.ant-menu{
+    /deep/.ant-menu-item{
+      a{
+        display: inline-block;
+        width: calc(100% - 20px);
+      }
+    }
+  }
 }
 </style>

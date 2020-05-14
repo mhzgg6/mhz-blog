@@ -44,7 +44,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="less">
 .top_info{
   width: 100%;
   height: 100%;

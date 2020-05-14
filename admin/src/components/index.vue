@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="less">
 .admin_index{
   width: 100%;
   height: 100%;

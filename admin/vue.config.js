@@ -1,3 +1,5 @@
+const path = require('path');
+const theme = require('./src/assets/theme/theme');
 module.exports = {
     devServer: {
                 open: true, //浏览器自动打开页面
@@ -16,5 +18,19 @@ module.exports = {
         //                 }
         //             }
         //         }
-            }
+    },
+    css: {
+        loaderOptions: {
+            less: {
+                modifyVars: theme.red,
+                javascriptEnabled: true,
+            },
+        },
+    },
+    pluginOptions: {
+        'style-resources-loader': {
+            preProcessor: 'less',
+            patterns: [path.resolve(__dirname, './src/assets/theme/index.less')]
+        }
+    }
 }

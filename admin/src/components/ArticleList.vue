@@ -193,7 +193,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="less">
 .article_list{
   width: 100%;
   height: 100%;
