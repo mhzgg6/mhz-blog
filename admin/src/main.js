@@ -9,7 +9,7 @@ import './assets/element_ui/element-variables.scss'
 import 'element-ui/lib/theme-chalk/index.css'
 //  导入ant design vue
 // import Antd from 'ant-design-vue';
-import 'ant-design-vue/dist/antd.less';
+// import 'ant-design-vue/dist/antd.less';
 //  导入icon.js
 import './assets/icon/iconfont'
 import request from './assets/axios/index'

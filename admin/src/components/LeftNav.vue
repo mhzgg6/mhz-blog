@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { Menu, Icon, SubMenu } from 'ant-design-vue';
+import { Menu, Icon } from 'ant-design-vue';
 export default {
   name: 'left_nav',
   components: {
@@ -54,7 +54,7 @@ export default {
   .logo{
     width: 100%;
     height: 60px;
-    background: greenyellow;
+    background: @black;
   }
   /deep/.ant-menu{
     /deep/.ant-menu-item{

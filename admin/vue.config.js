@@ -22,8 +22,10 @@ module.exports = {
     css: {
         loaderOptions: {
             less: {
-                modifyVars: theme.red,
-                javascriptEnabled: true,
+                lessOptions: {
+                    modifyVars: theme.blue,
+                    javascriptEnabled: true,
+                },
             },
         },
     },

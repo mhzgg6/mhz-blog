@@ -89,7 +89,7 @@ export default {
   /deep/.ant-layout{
     /deep/.ant-layout-header{
       height: 60px;
-      color: @error-color;
+      // color: @error-color;
     }
   }
 }

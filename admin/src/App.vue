@@ -44,4 +44,26 @@ html,body,#app{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/*滚动条样式*/
+::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 6px;
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 6px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  // -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.18);
+  // box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.18);
+  border-radius: 6px;
+  background: none;
+}
 </style>
