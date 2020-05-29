@@ -5,7 +5,7 @@
       logo
     </div>
     <!-- 结束 logo -->
-    <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
+    <a-menu theme="blue" mode="inline" :default-selected-keys="['1']">
       <a-menu-item key="1">
         <a-icon type="user" />
         <router-link to="/admin">首页</router-link>
@@ -51,12 +51,14 @@ export default {
 .left_nav{
   width: 100%;
   height: 100%;
+  background-color: @white;
   .logo{
     width: 100%;
     height: 60px;
     background: @black;
   }
   /deep/.ant-menu{
+    background-color: @white;
     /deep/.ant-menu-item{
       a{
         display: inline-block;

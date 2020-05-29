@@ -1,6 +1,6 @@
 <template>
   <div class="article_list">
-    <el-table
+    <!-- <el-table
       :data="articleData"
       style="width: 100%">
 
@@ -57,7 +57,6 @@
             size="mini"
             @click="handleEdit(scope.$index, scope.row)">编辑
           </el-button>
-          <!-- 删除文章 -->
           <el-button
             size="mini"
             type="danger"
@@ -67,24 +66,44 @@
         </template>
       </el-table-column>
 
-    </el-table>
-
-    <div class="block">
-      <span class="demonstration">共{{allCount}}条</span>
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"         
-        :current-page.sync="currentPage"
-        :page-size="3"
-        layout="prev, pager, next, jumper"
-        :total="allCount">
-      </el-pagination>
+    </el-table> -->
+    <div class="table-warp">
+      <a-table
+        class="data-table"
+        :columns="columns"
+        :dataSource="datalist"
+        rowKey="id"
+        :loading="loading"
+        :pagination="false"
+        >
+        <span slot="tags" slot-scope="data">
+          <a-tag
+            v-for="tag in data.label"
+            :key="tag"
+          >
+            <!-- :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'" -->
+            {{ tag }}
+          </a-tag>
+        </span>
+      </a-table>
     </div>
-    <div>dd</div>
+    <div class="footer">
+      <a-pagination
+        v-if="datalist && datalist.length"
+        showSizeChanger
+        @showSizeChange="onShowSizeChange"
+        :showTotal="total => `总共：${total}条`"
+        :total="pagination.total"
+        :pageSize="pagination.size"
+        v-model="pagination.num"
+        @change="onPageChange"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import { Table, Tag, Pagination } from 'ant-design-vue';
 import marked from 'marked'
 var rendererMD = new marked.Renderer()
 marked.setOptions({
@@ -103,13 +122,77 @@ export default {
       articleData: [],
       currentPage: 1,
       allPage: 0,
-      allCount: 0
+      allCount: 0,
+      pagination: {
+        total: 0,
+        size: 3,
+        num: 1
+      },
+      columns: [
+        {
+          title: '序号',
+          customRender: (text, row, index) => index + 1,
+        },
+        {
+          title: '标题',
+          dataIndex: 'title',
+        },
+        {
+          title: '内容',
+          dataIndex: 'content',
+        },
+        {
+          title: '封面图',
+          dataIndex: 'img',
+        },
+        {
+          title: '日期',
+          dataIndex: 'updatedAt',
+        },
+        {
+          title: '标签',
+          // dataIndex: 'tags',
+          class: 'tag-list',
+          scopedSlots: { customRender: 'tags' },
+        },
+        {
+          title: '分类',
+          dataIndex: 'label[0]',
+        },
+        {
+          title: '赞',
+          dataIndex: 'praiseNum',
+        },
+        {
+          title: '阅读',
+          dataIndex: 'readNum',
+        },
+        {
+          title: '评论',
+          dataIndex: 'commentNum',
+        },
+        {
+          title: '操作',
+          dataIndex: 'do',
+        }
+      ],
+      datalist: [],
+      loading: false
     }
   },
   computed: {
     show_content() {
       return marked(this.articleData[0].content)
     }
+  },
+  components: {
+    ATable: Table,
+    ATag: Tag,
+    APagination: Pagination
+  },
+  created() {
+    this.get_article_list(1, 3)
+    this.get_allPage()
   },
   methods: {
     async get_allPage() {
@@ -125,10 +208,10 @@ export default {
       data.size = size
       let res = await this.request.api_get_article(data)
       this.articleData = res.data
-      console.log(this.articleData[0], '数组')
-      marked(this.articleData[0].content, { sanitize: true })
+      // marked(this.articleData[0].content, { sanitize: true })
       this.get_time(this.articleData)
-      console.log(res)
+      this.datalist = this.articleData;
+      console.log(this.datalist)
     },
     //  转换时间
     get_time(arr) {
@@ -180,11 +263,13 @@ export default {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`,'1');
       this.get_article_list(val, 3)
+    },
+    onShowSizeChange() {
+
+    },
+    onPageChange() {
+
     }
-  },
-  created() {
-    this.get_article_list(1, 3)
-    this.get_allPage()
   },
   // mounted() {
   //   console.log(this.articleData[0], '数组')

@@ -45,9 +45,7 @@
       </a-layout-header>
 
       <!-- 内容部分  开始 -->
-      <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
-      >
+      <a-layout-content>
         <router-view></router-view>
       </a-layout-content>
       <!-- 内容部分  结束 -->
@@ -87,9 +85,15 @@ export default {
 .admin-content{
   height: 100%;
   /deep/.ant-layout{
+    min-width: 1000px;
     /deep/.ant-layout-header{
       height: 60px;
       // color: @error-color;
+    }
+    /deep/.ant-layout-content{
+      background-color: @white;
+      margin: @padding-xs;
+      padding: 0 @padding-lg;
     }
   }
 }
