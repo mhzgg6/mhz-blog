@@ -18,11 +18,10 @@
       <a-table
         class="per-table"
         :columns="columns"
-        :dataSource="datalist"
+        :dataSource="pagination.rows"
         rowKey="id"
-        :loading="loading"
         :pagination="false"
-        :scroll="{ y: 375 }"
+        :scroll="{ y: 700 }"
         >
         <template slot="img" slot-scope="data">
           <img :src="data.img" alt="" width="100%">
@@ -40,13 +39,13 @@
     </div>
     <div class="footer">
       <a-pagination
-        v-if="datalist && datalist.length"
+        v-if="pagination.rows && pagination.rows.length"
         showSizeChanger
         @showSizeChange="onShowSizeChange"
         :showTotal="total => `总共：${total}条`"
         :total="pagination.total"
         :pageSize="pagination.size"
-        v-model="pagination.num"
+        v-model="pagination.page"
         @change="onPageChange"
       />
     </div>
@@ -71,13 +70,11 @@ export default {
   data() {
     return{
       articleData: [],
-      currentPage: 1,
-      allPage: 0,
-      allCount: 0,
       pagination: {
+        rows: null,
         total: 0,
         size: 10,
-        num: 1
+        page: 1
       },
       columns: [
         {
@@ -127,8 +124,6 @@ export default {
           dataIndex: 'do',
         }
       ],
-      datalist: [],
-      loading: false
     }
   },
   computed: {
@@ -144,38 +139,18 @@ export default {
     AInput: Input
   },
   created() {
-    this.get_article_list(1, 10)
+    this.get_article_list({page: this.pagination.page, size: this.pagination.size})
     this.get_allPage()
   },
   methods: {
     async get_allPage() {
       let res = await this.request.api_get_articleAllPage()
-      this.allPage = res.data.allPage
-      this.allCount = res.data.allCount
-      console.log('allPage',res.data.allPage) 
+      this.pagination.total = res.data.allCount
     },
-    //  获取文章列表
-    async get_article_list(page, size) {
-      let data = {}
-      data.page = page
-      data.size = size
+    async get_article_list(page) {
+      const data = { ...page }
       let res = await this.request.api_get_article(data)
-      this.articleData = res.data
-      // marked(this.articleData[0].content, { sanitize: true })
-      this.get_time(this.articleData)
-      this.datalist = this.articleData;
-      console.log(this.datalist)
-    },
-    //  转换时间
-    get_time(arr) {
-      for(var i = 0; i < arr.length; i ++) {
-        var str = arr[i].updatedAt
-        var re_str = new Date(str).toLocaleString()
-        var year = re_str.split(' ')[0]
-        var time = re_str.split(' ')[1].slice(2)
-        var year_time = year + " " + time
-        arr[i].updatedAt = year_time
-      }
+      this.pagination.rows = res.data;
     },
     //  删除文章
     handleDelete(index, article) {
@@ -209,19 +184,12 @@ export default {
           })
       })
     },
-    //  分页
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+    onShowSizeChange(page, size) {
+      this.pagination.size = size
+      this.get_article_list({page, size})
     },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`,'1');
-      this.get_article_list(val, 3)
-    },
-    onShowSizeChange() {
-
-    },
-    onPageChange() {
-
+    onPageChange(curent, size) {
+      this.get_article_list({page: curent, size})
     }
   },
   // mounted() {

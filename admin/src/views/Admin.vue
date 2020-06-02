@@ -1,29 +1,4 @@
 <template>
-
-    <!-- <el-container>
-      开始 侧边栏
-      <el-aside>
-        <left-nav></left-nav>
-      </el-aside>
-      结束 侧边栏
-
-      开始 右边内容
-      <el-container>
-        开始 内容导航
-        <el-header>
-          <top-info></top-info>
-        </el-header>
-        结束 内容导航
-
-        开始 内容部分
-        <el-main>
-          <router-view></router-view>
-        </el-main>
-        结束 内容部分
-      </el-container>
-      结束 右边内容
-    </el-container> -->
-
   <a-layout class="admin-content">
 
     <!-- 侧边栏部分  开始 -->
