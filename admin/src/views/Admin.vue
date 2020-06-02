@@ -93,7 +93,7 @@ export default {
     /deep/.ant-layout-content{
       background-color: @white;
       margin: @padding-xs;
-      padding: 0 @padding-lg;
+      // padding: 0 @padding-lg;
     }
   }
 }

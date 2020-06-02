@@ -1,82 +1,33 @@
 <template>
   <div class="article_list">
-    <!-- <el-table
-      :data="articleData"
-      style="width: 100%">
-
-      <el-table-column
-        prop="updatedAt"
-        label="日期"
-        width="180">
-      </el-table-column>
-
-      <el-table-column
-        prop="title"
-        label="标题"
-        width="180">
-      </el-table-column>
-
-      <el-table-column
-        prop="content"
-        label="内容">
-      </el-table-column>
-
-      <el-table-column
-        prop="label"
-        label="标签"
-        width="180">
-      </el-table-column>
-
-      <el-table-column
-        prop="img"
-        label="封面图"
-        width="180">
-      </el-table-column>
-
-      <el-table-column
-        prop="likeNum"
-        label="赞"
-        width="60">
-      </el-table-column>
-
-      <el-table-column
-        prop="readNum"
-        label="阅读"
-        width="60">
-      </el-table-column>
-
-      <el-table-column
-        prop="commentNum"
-        label="评论"
-        width="60">
-      </el-table-column>
-
-      <el-table-column width="200" label="操作">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑
-          </el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-
-    </el-table> -->
+    <div class="top">
+      <div class="left">
+      </div>
+      <div class="right">
+        <a-input
+          class="inputBox"
+          placeholder="身份证、姓名或手机查询"
+          style="width: 200px"
+          allowClear
+        />
+          <!-- v-model="keyWord" -->
+        <a-button class="searchBt" type="primary">搜索</a-button>
+      </div>
+    </div>
     <div class="table-warp">
       <a-table
-        class="data-table"
+        class="per-table"
         :columns="columns"
         :dataSource="datalist"
         rowKey="id"
         :loading="loading"
         :pagination="false"
+        :scroll="{ y: 375 }"
         >
-        <span slot="tags" slot-scope="data">
+        <template slot="img" slot-scope="data">
+          <img :src="data.img" alt="" width="100%">
+        </template>
+        <template slot="tags" slot-scope="data">
           <a-tag
             v-for="tag in data.label"
             :key="tag"
@@ -84,7 +35,7 @@
             <!-- :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'" -->
             {{ tag }}
           </a-tag>
-        </span>
+        </template>
       </a-table>
     </div>
     <div class="footer">
@@ -103,7 +54,7 @@
 </template>
 
 <script>
-import { Table, Tag, Pagination } from 'ant-design-vue';
+import { Table, Tag, Pagination, Button, Input } from 'ant-design-vue';
 import marked from 'marked'
 var rendererMD = new marked.Renderer()
 marked.setOptions({
@@ -125,7 +76,7 @@ export default {
       allCount: 0,
       pagination: {
         total: 0,
-        size: 3,
+        size: 10,
         num: 1
       },
       columns: [
@@ -143,7 +94,7 @@ export default {
         },
         {
           title: '封面图',
-          dataIndex: 'img',
+          scopedSlots: { customRender: 'img' },
         },
         {
           title: '日期',
@@ -188,10 +139,12 @@ export default {
   components: {
     ATable: Table,
     ATag: Tag,
-    APagination: Pagination
+    APagination: Pagination,
+    AButton: Button,
+    AInput: Input
   },
   created() {
-    this.get_article_list(1, 3)
+    this.get_article_list(1, 10)
     this.get_allPage()
   },
   methods: {
@@ -281,10 +234,82 @@ export default {
 <style lang="less">
 .article_list{
   width: 100%;
-  height: 100%;
-  .block{
-    .el-pagination{
-      padding: 0;
+  display: flex;
+  flex-direction: column;
+  .top {
+    padding: @content-padding-v @content-padding-h;
+    .left {
+      float: left;
+      .ant-btn {
+        margin-right: 10px;
+        color: @primary-color;
+        border-color: @primary-color;
+      }
+    }
+    .right {
+      float: right;
+      .ant-select {
+        margin-left: 5px;
+      }
+      .search-item {
+        width: 180px;
+        margin: 0 5px 0 0;
+        &.scope {
+          width: 100px;
+        }
+      }
+      .searchBt {
+        background-color: @primary-color;
+        border: 0;
+        color: @white;
+        margin-left: 5px;
+      }
+    }
+  }
+  .per-table {
+    flex-shrink: 1;
+    min-height: 0;
+    padding: 0 @content-padding-h;
+    overflow-y: auto;
+    /deep/table {
+      table-layout: fixed;
+      tr{
+        // height: 100px;
+        td,th {
+          // white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        td{
+            padding: 2px 2px;
+        }
+        td.tag-list{
+          span{
+            margin-bottom: @content-padding-v;
+          }
+        }
+      }
+      tr.selected{
+        background: @primary-2;
+      }
+    } 
+    .table-tr {
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      .worstatus {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+      }
+    }
+  }
+  .footer {
+    padding: @content-padding-v @content-padding-h;
+    .ant-pagination {
+      float: right;
+      margin-bottom: 10px;
     }
   }
 }
