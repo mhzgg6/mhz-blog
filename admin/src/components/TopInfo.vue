@@ -1,28 +1,21 @@
 <template>
   <div class="top_info">
-    <el-row>
-      <el-col :span="4">
-      </el-col>
-      <el-col :span="20">
-        <!-- 头像 -->
-        <span class="avater">
-          <img :src="avater" alt="" width="100%" height="100%">
-        </span>
-        
-        <el-dropdown>
-          <i class="el-icon-setting"></i>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </el-col>
-    </el-row>
+    <div class="header_right">
+      <a href="">
+        <a-icon type="message" />
+      </a>
+      <span>
+        {{username}}
+      </span>
+      <span>
+        <img :src="avater" alt="" width="100%" height="100%">
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
+import { Icon } from 'ant-design-vue';
 export default {
   name: 'top_info',
   data() {
@@ -30,12 +23,15 @@ export default {
 
     }
   },
+  components: {
+    AIcon: Icon
+  },
   computed: {
     avater() {
       return this.$store.state.user.avater
     },
     username() {
-      return this.$store.state.user.username 
+      return `你好，${this.$store.state.user.username}` 
     }
   },
   methods: {
@@ -48,25 +44,24 @@ export default {
 .top_info{
   width: 100%;
   height: 100%;
-  .el-row{
-    width: 100%;
+  .header_right{
+    float: right;
     height: 100%;
-    .el-col{
+    padding-right: 32px;
+    span{
+      display: inline-block;
+      margin-left: @content-padding-v;
       height: 100%;
-      span{
-        display: inline-block;
+      &:nth-child(1) {
+        width: 60px;
+        height: 60px;
       }
-      .remind{
-        width: 20px;
-        height: 100%;
-      }
-      .avater{
+      img{
         width: 40px;
         height: 40px;
-        margin-top: 10px;
-        img{
-          border-radius: 20px;
-        }
+        border-radius: 50%;
+        margin: 10px;
+        vertical-align: top;
       }
     }
   }

@@ -21,6 +21,7 @@
         :dataSource="pagination.rows"
         rowKey="id"
         :pagination="false"
+        :loading="pagination.loading"
         :scroll="{ y: 700 }"
         >
         <template slot="img" slot-scope="data">
@@ -34,6 +35,19 @@
             <!-- :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'" -->
             {{ tag }}
           </a-tag>
+        </template>
+        <template slot="do" slot-scope="data">
+          <a>编辑</a>
+          <a-popconfirm
+            :title="`确定删除${data.title}这篇文章吗?`"
+            ok-text="确认"
+            cancel-text="取消"
+            @confirm="confirm(data._id)"
+            @cancel="cancel"
+          >
+            <!-- @visibleChange="handleVisibleChange" -->
+            <a href="#">删除</a>
+          </a-popconfirm>
         </template>
       </a-table>
     </div>
@@ -53,7 +67,7 @@
 </template>
 
 <script>
-import { Table, Tag, Pagination, Button, Input } from 'ant-design-vue';
+import { Table, Tag, Pagination, Button, Input, Popconfirm } from 'ant-design-vue';
 import marked from 'marked'
 var rendererMD = new marked.Renderer()
 marked.setOptions({
@@ -74,7 +88,8 @@ export default {
         rows: null,
         total: 0,
         size: 10,
-        page: 1
+        page: 1,
+        loading: false
       },
       columns: [
         {
@@ -121,9 +136,11 @@ export default {
         },
         {
           title: '操作',
-          dataIndex: 'do',
+          class: 'do-list',
+          scopedSlots: { customRender: 'do' },
         }
       ],
+      deleteVisible: false
     }
   },
   computed: {
@@ -136,7 +153,8 @@ export default {
     ATag: Tag,
     APagination: Pagination,
     AButton: Button,
-    AInput: Input
+    AInput: Input,
+    APopconfirm: Popconfirm
   },
   created() {
     this.get_article_list({page: this.pagination.page, size: this.pagination.size})
@@ -148,41 +166,14 @@ export default {
       this.pagination.total = res.data.allCount
     },
     async get_article_list(page) {
+      this.pagination.loading = true
       const data = { ...page }
-      let res = await this.request.api_get_article(data)
-      this.pagination.rows = res.data;
-    },
-    //  删除文章
-    handleDelete(index, article) {
-      console.log(index, article._id)
-      let title = article.title
-      let data = {}
-      data._id = article._id
-      this.$confirm(`此操作将从数据库删除标题为${title}的文章, 是否继续?`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(async () => {
-          let res = await  this.request.api_post_deleteArticle(data)
-          if(res.data.status == 1){
-            this.$router.go(0)
-            this.$message({
-              type: 'success',
-              message: '删除成功!'
-            })
-          }else{
-            this.$message({
-              type: 'error',
-              message: '删除失败!'
-            });
-          }
-          
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          })
-      })
+      await this.request.api_get_article(data)
+      .then(res => {
+        this.pagination.loading = false
+        this.pagination.rows = res.data
+      }) 
+      
     },
     onShowSizeChange(page, size) {
       this.pagination.size = size
@@ -190,20 +181,43 @@ export default {
     },
     onPageChange(curent, size) {
       this.get_article_list({page: curent, size})
+    },
+    async confirm(_id) {
+      let data = {}
+      data._id = _id
+      // await this.request.api_post_deleteArticle(data)
+      // .then(res => {
+      //   if(res.data.status == 1){
+      //     this.$message.success('删除成功')
+      //     this.get_article_list({page: this.pagination.page, size: this.pagination.size})
+      //   }
+      // })
+      // .catch(err => {
+      //   this.$message.error('删除失败');
+      // })
+    },
+    cancel() {
+    },
+    handleVisibleChange() {
+      this.deleteVisible = this.deleteVisible?false:true;
     }
   },
-  // mounted() {
-  //   console.log(this.articleData[0], '数组')
-  //   console.log(this.show_content, 'jisuan')
-  // },
 }
 </script>
 
 <style lang="less">
 .article_list{
-  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-flex: 1;
+  -ms-flex: auto;
+  flex: auto;
+  min-height: 0;
   .top {
     padding: @content-padding-v @content-padding-h;
     .left {
@@ -234,42 +248,62 @@ export default {
       }
     }
   }
-  .per-table {
-    flex-shrink: 1;
+  .table-warp{
+    -webkit-box-flex: 1;
+    -ms-flex: auto;
+    flex: auto;
     min-height: 0;
-    padding: 0 @content-padding-h;
-    overflow-y: auto;
-    /deep/table {
-      table-layout: fixed;
-      tr{
-        // height: 100px;
-        td,th {
-          // white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        td{
-            padding: 2px 2px;
-        }
-        td.tag-list{
-          span{
-            margin-bottom: @content-padding-v;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    .per-table {
+      flex-shrink: 1;
+      min-height: 0;
+      padding: 0 @content-padding-h;
+      overflow-y: auto;
+      /deep/table {
+        table-layout: fixed;
+        tr{
+          // height: 100px;
+          td,th {
+            // white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          td{
+              padding: 2px 2px;
+          }
+          td.tag-list{
+            span{
+              margin-bottom: @content-padding-v;
+            }
+          }
+          td.do-list{
+            a{
+              color: @primary-color;
+              margin-right: 4px;
+              cursor: pointer;
+            }
           }
         }
-      }
-      tr.selected{
-        background: @primary-2;
-      }
-    } 
-    .table-tr {
-      cursor: pointer;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      .worstatus {
-        width: 16px;
-        height: 16px;
-        display: inline-block;
+        tr.selected{
+          background: @primary-2;
+        }
+      } 
+      .table-tr {
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        .worstatus {
+          width: 16px;
+          height: 16px;
+          display: inline-block;
+        }
       }
     }
   }

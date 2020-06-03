@@ -4,22 +4,9 @@
     <h5>新增文章</h5>
 
     <div class="article article_title">
-      <el-row>
-        <el-col>
-          <span>
-            <el-tooltip class="item" effect="dark" content="必填" placement="top-start">
-              <i>*</i>
-            </el-tooltip>
-            标题：
-          </span>
-        </el-col>
-        <el-col>
-          <el-input v-model="title" placeholder="文章标题" @blur="blur_title"></el-input>
-        </el-col>
-      </el-row>
-    </div>
 
-    <div class="article article_image">
+
+    <!-- <div class="article article_image">
       <el-row>
         <el-col>
           <span>
@@ -30,89 +17,57 @@
           </span>
         </el-col>
         <el-col>
-          <!-- 图片预览 -->
+
           <label for="avater" class="cover_article">
             <img :src="isUpload?articleSrc:default_image" alt="" width="100%" height="100%">
           </label>
           <input @change="show_image($event)" id="avater" type="file" ref="image_btn" multiple="multiple">
         </el-col>
       </el-row>
-    </div>
+    </div> -->
     
-    <div class="article article_labels">
-      <el-row>
-        <el-col>
-          <span>
-            <el-tooltip class="item" effect="dark" content="必填" placement="top-start">
-              <i>*</i>
-            </el-tooltip>
-            标签：
-          </span>
-        </el-col>
-        <el-col>
-          <el-tag
-            :key="tag"
-            v-for="tag in dynamicTags"
-            closable
-            :disable-transitions="false"
-            @close="handleClose(tag)">
-            {{tag}}
-          </el-tag>
-          <el-input
-            class="input-new-tag"
-            v-if="inputVisible"
-            v-model="inputValue"
-            ref="saveTagInput"
-            size="small"
-            @keyup.enter.native="handleInputConfirm"
-            @blur="handleInputConfirm"
-          >
-          </el-input>
-          <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-        </el-col>
-      </el-row>
-    </div>
-
-    <div class="article article_textarea">
-      <el-row>
-        <el-col>
-          <span>
-            <el-tooltip class="item" effect="dark" content="必填" placement="top-start">
-              <i>*</i>
-            </el-tooltip>
-            描述：
-          </span>
-        </el-col>
-        <el-col>
-          <el-input
-            @blur="blur_describe"
-            type="textarea"
-            :rows="2"
-            placeholder="文章描述"
-            v-model="describe">
-          </el-input>
-        </el-col>
-      </el-row>
-    </div>
-
-    <div class="article article_content">
-      <el-row>
-        <el-col>
-          <span>
-            <el-tooltip class="item" effect="dark" content="必填" placement="top-start">
-              <i>*</i>
-            </el-tooltip>
-            内容：
-          </span>
-        </el-col>
-        <el-col>
-          <mavon-editor @imgAdd="editorAddImg" @change="get_con" ref="md" v-model="value"/>
-        </el-col>
-      </el-row>
-
-      <div class="submit">
-        <el-button type="primary" @click="addArticle">添加文章</el-button>
-      </div>
+    <a-form id="form" :form="form" layout="horizontal">
+      <a-row :gutter="24">
+        <a-col :span="24">
+          <a-form-item label="文章标题" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
+            <a-input  
+              v-decorator="['username',{
+                rules: [{ required:true}],
+              }]"
+              >
+                <!-- initialValue: selected.username -->
+            </a-input>
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="24">
+        <a-col :span="24">
+          <a-form-item label="文章描述" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
+            <a-textarea 
+              style="resize:none;"
+              maxlength="200" 
+              placeholder="最多填200个字符!"
+              :rows="4" 
+              allow-clear
+              v-decorator="[`reduceTo`,{rules: [{required: true, message: '请填写文章描述!'}]}]"
+              />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      <a-row :gutter="24">
+        <a-col :span="24">
+          <a-form-item label="文章描述" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
+            <mavon-editor 
+              v-decorator="[`article_content`,{rules: [{required: true, message: '请填写文章描述!'}],initialValue: value}]"
+              @imgAdd="editorAddImg" 
+              @change="get_con" 
+              ref="md" 
+              />
+          </a-form-item>
+        </a-col>
+      </a-row>
+      </a-row>
+    </a-form>
     </div>
     <!-- 结束    内容部分 -->
   </div>
@@ -131,6 +86,7 @@
 //   smartLists: true,
 //   smartypants: false
 // })
+import { Row, Col, Form, Input, Button } from "ant-design-vue";
 export default {
   name: 'editArticle',
   data() {
@@ -149,11 +105,18 @@ export default {
       articleImg: '',           //  文章封面图片
     }
   },
-  // computed: {
-  //   show_content() {
-  //     return marked(this.input, { sanitize: true })
-  //   }
-  // },
+  components:{
+    ARow: Row,
+    ACol: Col,
+    AForm: Form,
+    AFormItem: Form.Item,
+    AInput: Input,
+    ATextarea: Input.TextArea,
+    AButton: Button
+  },
+  beforeCreate() {
+    this.form = this.$form.createForm(this);
+  },
   methods: {
     get_con(){
       console.log(this.$refs.md.d_value,'值')
@@ -272,40 +235,7 @@ export default {
 }
 </script>
 
-<style>
-.article .el-col:nth-child(1){
-  width: 100px;
-}
-.article .el-col:nth-child(2){
-  width: calc(100% - 100px);
-}
-.article .el-col span i{
-  color: red;
-}
-/* 头像部分 */
-.article_image input {
-  width: 200px;
-  height: 200px;
-  position: relative;
-  overflow: hidden;
-}
-.article_image .cover_article{
-  border: 1px dashed #d9d9d9;
-  position: absolute;
-  left: 100px;
-  top: 0;
-  width: 200px;
-  height: 200px;
-  background: #fff;
-  z-index: 1;
-}
-/* 标签 */
-.article_labels .el-tag{
-  margin-right: 20px;
-}
-</style>
-
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .editArticle {
   width: 100%;
   background: #fff;
@@ -314,32 +244,7 @@ export default {
     text-align: center;
   }
   .article_title{
-    margin: 20px 0;
-    span{
-      line-height: 40px;
-    }
-  }
-  .article_image{
-    margin: 20px 0;
-  }
-  .article_labels{
-    margin: 20px 0;
-  }
-  .article_textarea{
-    margin: 20px 0;
-  }
-  .article_content{
-    margin-bottom: 100px;
-    .submit{
-      height: 60px;
-      button{
-        margin: 20px 20px 0 0;
-        float: right;
-      }
-    }
-    .markdown-body{
-      min-height: 500px;
-    }
+    padding: @content-padding-v @content-padding-h;
   }
 }
 </style>

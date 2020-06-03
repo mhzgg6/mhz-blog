@@ -11,12 +11,12 @@
     <a-layout>
 
       <a-layout-header style="background: #fff; padding: 0">
-        <a-icon
+        <!-- <a-icon
           class="trigger"
           :type="collapsed ? 'menu-unfold' : 'menu-fold'"
           @click="() => (collapsed = !collapsed)"
-        />
-        <!-- <top-info></top-info> -->
+        /> -->
+        <top-info></top-info>
       </a-layout-header>
 
       <!-- 内容部分  开始 -->
