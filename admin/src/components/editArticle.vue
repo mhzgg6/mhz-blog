@@ -2,72 +2,106 @@
   <div class="editArticle">
     <!-- 开始    内容部分 -->
     <h5>新增文章</h5>
-
     <div class="article article_title">
-
-
-    <!-- <div class="article article_image">
-      <el-row>
-        <el-col>
-          <span>
-            <el-tooltip class="item" effect="dark" content="必填" placement="top-start">
-              <i>*</i>
-            </el-tooltip>
-            封面：
-          </span>
-        </el-col>
-        <el-col>
-
-          <label for="avater" class="cover_article">
-            <img :src="isUpload?articleSrc:default_image" alt="" width="100%" height="100%">
-          </label>
-          <input @change="show_image($event)" id="avater" type="file" ref="image_btn" multiple="multiple">
-        </el-col>
-      </el-row>
-    </div> -->
-    
-    <a-form id="form" :form="form" layout="horizontal">
-      <a-row :gutter="24">
-        <a-col :span="24">
-          <a-form-item label="文章标题" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
-            <a-input  
-              v-decorator="['username',{
-                rules: [{ required:true}],
-              }]"
+      <a-form id="form" :form="form" layout="horizontal">
+        <a-row :gutter="24">
+          <a-col :span="24">
+            <a-form-item label="文章标题" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
+              <a-input  
+                v-decorator="['username',{
+                  rules: [{ required:true}],
+                }]"
+                >
+                  <!-- initialValue: selected.username -->
+              </a-input>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="24">
+            <a-form-item label="文章封面" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
+              <a-upload
+                name="avatar"
+                list-type="picture-card"
+                class="avatar-uploader"
+                :show-upload-list="false"
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                :before-upload="beforeUpload"
+                @change="uploadAvater"
               >
-                <!-- initialValue: selected.username -->
-            </a-input>
-          </a-form-item>
-        </a-col>
-      </a-row>
+                <img v-if="upload.img" :src="upload.img" alt="avatar" />
+                <div v-else>
+                  <a-icon :type="upload.loading ? 'loading' : 'plus'" />
+                  <div class="ant-upload-text">
+                    Upload
+                  </div>
+                </div>
+              </a-upload>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="24">
+            <a-form-item label="文章标签" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
+              <template v-for="(tag, index) in tags">
+                <a-tooltip v-if="tag.length > 20" :key="tag" :title="tag">
+                  <a-tag :key="tag" :closable="index !== 0" @close="() => handleClose(tag)">
+                    {{ `${tag.slice(0, 20)}...` }}
+                  </a-tag>
+                </a-tooltip>
+                <a-tag v-else :key="tag" :closable="index !== 0" @close="() => handleClose(tag)">
+                  {{ tag }}
+                </a-tag>
+              </template>
+              <a-input
+                v-if="inputVisible"
+                ref="input"
+                type="text"
+                size="small"
+                :style="{ width: '78px' }"
+                :value="inputValue"
+                @change="handleInputChange"
+                @blur="handleInputConfirm"
+                @keyup.enter="handleInputConfirm"
+              />
+              <a-tag v-else style="background: #fff; borderStyle: dashed;" @click="showInput">
+                <a-icon type="plus" /> New Tag
+              </a-tag>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="24">
+            <a-form-item label="文章描述" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
+              <a-textarea 
+                style="resize:none;"
+                maxlength="200" 
+                placeholder="最多填200个字符!"
+                :rows="4" 
+                allow-clear
+                v-decorator="[`reduceTo`,{rules: [{required: true, message: '请填写文章描述!'}]}]"
+                />
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row :gutter="24">
+          <a-col :span="24">
+            <a-form-item label="文章内容" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
+              <mavon-editor 
+                v-decorator="[`article_content`,{rules: [{required: true, message: '请填写文章描述!'}],initialValue: value}]"
+                @imgAdd="editorAddImg" 
+                @change="get_con" 
+                ref="md" 
+                />
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form>
       <a-row :gutter="24">
         <a-col :span="24">
-          <a-form-item label="文章描述" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
-            <a-textarea 
-              style="resize:none;"
-              maxlength="200" 
-              placeholder="最多填200个字符!"
-              :rows="4" 
-              allow-clear
-              v-decorator="[`reduceTo`,{rules: [{required: true, message: '请填写文章描述!'}]}]"
-              />
-          </a-form-item>
+          <a-button type="primary" style="float: right;">提交</a-button>
         </a-col>
       </a-row>
-      <a-row :gutter="24">
-        <a-col :span="24">
-          <a-form-item label="文章描述" :label-col="{ span: 2 }" :wrapper-col="{ span: 22 }">
-            <mavon-editor 
-              v-decorator="[`article_content`,{rules: [{required: true, message: '请填写文章描述!'}],initialValue: value}]"
-              @imgAdd="editorAddImg" 
-              @change="get_con" 
-              ref="md" 
-              />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      </a-row>
-    </a-form>
     </div>
     <!-- 结束    内容部分 -->
   </div>
@@ -86,23 +120,18 @@
 //   smartLists: true,
 //   smartypants: false
 // })
-import { Row, Col, Form, Input, Button } from "ant-design-vue";
+import { Row, Col, Form, Input, Button, Tag, Icon, Upload } from "ant-design-vue";
 export default {
   name: 'editArticle',
   data() {
     return {    
-      title: '',                //  文章标题
-      imageUrl: '',       
-      dynamicTags: [],          //  标签列表
-      describe: '',             //  文章描述
-      value: '',                //  mavon-editor 值
-      avaterFormdata: '',       //  头像的foemdata数据  传到后端处理
-      isUpload: false,          
-      default_image: 'https://s2.ax1x.com/2019/11/07/MFYwGT.png',
-      articleSrc: '',         
+      upload: {
+        loading: false,
+        img: ''
+      },
+      tags: [],
       inputVisible: false,
       inputValue: '',
-      articleImg: '',           //  文章封面图片
     }
   },
   components:{
@@ -112,7 +141,10 @@ export default {
     AFormItem: Form.Item,
     AInput: Input,
     ATextarea: Input.TextArea,
-    AButton: Button
+    AButton: Button,
+    ATag: Tag,
+    AIcon: Icon,
+    AUpload: Upload
   },
   beforeCreate() {
     this.form = this.$form.createForm(this);
@@ -122,24 +154,7 @@ export default {
       console.log(this.$refs.md.d_value,'值')
       console.log(this.$refs.md.d_render,'值')
     },
-    //  title失去焦点
-    blur_title() {
-      if(!this.title) {
-        this.$message({
-          message: '请添加标题哦',
-          type: 'warning'
-        })
-      }
-    },
-    //  title失去焦点
-    blur_describe() {
-      if(!this.describe) {
-        this.$message({
-          message: '请添加文章描述哦',
-          type: 'warning'
-        })
-      }
-    },
+
     //  预览图片
     async show_image(e) {
       let file = e.target.files[0]
@@ -165,25 +180,67 @@ export default {
         //  测试上传图片
         let res = await this.request.api_post_img(param)
         this.articleImg = res.data.url
-        // console.log(res,this.articleImg,'封面')
+
       }
     },
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+    async uploadAvater(info) {
+      if (info.file.status === 'uploading') {
+        this.upload.loading = true;
+        return;
+      }
+      if (info.file.status === 'done') {
+        console.log(info)
+        let file = info.fileList[0]
+        let param = new FormData()//创建form对象
+        param.append('file',info)//通过append向form对象添加数据
+
+        await this.request.api_post_img(param)
+        .then(res => {
+          this.upload.img = res.data.url
+          this.upload.loading = false
+        })
+        .catch(err => {
+          this.$message.error("上传失败");
+          this.upload.loading = false
+        })
+      }
+    },
+    beforeUpload(file) {
+      console.log(file, 'ss')
+      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      if (!isJpgOrPng) {
+        this.$message.error('You can only upload JPG file!');
+      }
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error('Image must smaller than 2MB!');
+      }
+      return isJpgOrPng && isLt2M;
+    },
+    handleClose(removedTag) {
+      const tags = this.tags.filter(tag => tag !== removedTag);
+      this.tags = tags;
     },
     showInput() {
       this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
+      this.$nextTick(function() {
+        this.$refs.input.focus();
       });
     },
+    handleInputChange(e) {
+      this.inputValue = e.target.value;
+    },
     handleInputConfirm() {
-        let inputValue = this.inputValue;
-        if (inputValue) {
-          this.dynamicTags.push(inputValue);
-        }
-        this.inputVisible = false;
-        this.inputValue = '';
+      const inputValue = this.inputValue;
+      let tags = this.tags;
+      if (inputValue && tags.indexOf(inputValue) === -1) {
+        tags = [...tags, inputValue];
+      }
+      Object.assign(this, {
+        tags,
+        inputVisible: false,
+        inputValue: '',
+      });
     },
     //  处理编辑器添加图片
     async editorAddImg(pos, $file) {
