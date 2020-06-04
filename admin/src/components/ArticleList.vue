@@ -22,8 +22,8 @@
         rowKey="id"
         :pagination="false"
         :loading="pagination.loading"
-        :scroll="{ y: 700 }"
         >
+        <!-- :scroll="{ y: 700 }" -->
         <template slot="img" slot-scope="data">
           <img :src="data.img" alt="" width="100%">
         </template>
@@ -214,10 +214,8 @@ export default {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  -webkit-box-flex: 1;
-  -ms-flex: auto;
-  flex: auto;
-  min-height: 0;
+  overflow: hidden;
+  height: 100%;
   .top {
     padding: @content-padding-v @content-padding-h;
     .left {
@@ -249,22 +247,10 @@ export default {
     }
   }
   .table-warp{
-    -webkit-box-flex: 1;
-    -ms-flex: auto;
-    flex: auto;
-    min-height: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    .per-table {
       flex-shrink: 1;
-      min-height: 0;
       padding: 0 @content-padding-h;
       overflow-y: auto;
+    .per-table {
       /deep/table {
         table-layout: fixed;
         tr{

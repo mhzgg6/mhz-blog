@@ -1,7 +1,7 @@
 <template>
   <div class="editArticle">
     <!-- 开始    内容部分 -->
-    <h5>新增文章</h5>
+    <h4>新增文章</h4>
     <div class="article article_title">
       <a-form id="form" :form="form" layout="horizontal">
         <a-row :gutter="24">
@@ -25,10 +25,9 @@
                 list-type="picture-card"
                 class="avatar-uploader"
                 :show-upload-list="false"
-                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 :before-upload="beforeUpload"
-                @change="uploadAvater"
               >
+                <!-- @change="uploadAvater" -->
                 <img v-if="upload.img" :src="upload.img" alt="avatar" />
                 <div v-else>
                   <a-icon :type="upload.loading ? 'loading' : 'plus'" />
@@ -189,33 +188,29 @@ export default {
         return;
       }
       if (info.file.status === 'done') {
-        console.log(info)
-        let file = info.fileList[0]
-        let param = new FormData()//创建form对象
-        param.append('file',info)//通过append向form对象添加数据
-
-        await this.request.api_post_img(param)
-        .then(res => {
-          this.upload.img = res.data.url
-          this.upload.loading = false
-        })
-        .catch(err => {
-          this.$message.error("上传失败");
-          this.upload.loading = false
-        })
+        
       }
     },
-    beforeUpload(file) {
-      console.log(file, 'ss')
+    async beforeUpload(file) {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
-        this.$message.error('You can only upload JPG file!');
+        return this.$message.error('You can only upload JPG file!');
       }
       const isLt2M = file.size / 1024 / 1024 < 2;
       if (!isLt2M) {
-        this.$message.error('Image must smaller than 2MB!');
+        return this.$message.error('Image must smaller than 2MB!');
       }
-      return isJpgOrPng && isLt2M;
+      let param = new FormData()//创建form对象
+      param.append('file',file)//通过append向form对象添加数据
+      await this.request.api_post_img(param)
+      .then(res => {
+        this.upload.img = res.data.url
+        this.upload.loading = false
+      })
+      .catch(err => {
+        this.$message.error("上传失败")
+        this.upload.loading = false
+      })
     },
     handleClose(removedTag) {
       const tags = this.tags.filter(tag => tag !== removedTag);
@@ -296,7 +291,7 @@ export default {
 .editArticle {
   width: 100%;
   background: #fff;
-  h5{
+  h4{
     line-height: 40px;
     text-align: center;
   }
